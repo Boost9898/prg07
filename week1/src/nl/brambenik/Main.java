@@ -12,12 +12,19 @@ public class Main {
         Utils.greaterThan2(3);
         Utils.greaterThan2("three");
 
-        Bike bike = new Bike();
         Bike.setSpeed(30);
-        System.out.println(Bike.getSpeed());
+        System.out.println("Bike speed is " + Bike.getSpeed());
 
         Bike.drive(5);
 
+        System.out.println("Persons " + Tandem.getPersons());
+
+        System.out.println("BatteryLevel " + Ebike.getBatteryLevel() + "%");
+
+        Tandem.setPersons(1);
+        Tandem.accelerate(1);
+        Tandem.setPersons(2);
+        Tandem.accelerate(1);
 
     }
 }

@@ -14,7 +14,7 @@ public class Bike {
 
     public static void drive(int power) {
         setSpeed(power * 10);
-        System.out.println(getSpeed());
+        System.out.println("Bike speed is " + getSpeed());
     }
 }
 

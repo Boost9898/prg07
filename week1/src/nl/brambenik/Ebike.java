@@ -12,11 +12,11 @@ public class Ebike extends Bike {
         Ebike.batteryLevel = batteryLevel;
     }
 
-    public static void accelerate(int batteryLevel) {
+    public static void accelerate(int power) {
         if (batteryLevel > 1 && batteryLevel <= 100) {
-            
+            drive(power * 2);
         } else {
-//            Je moeder
+            drive(power);
         }
     }
 }

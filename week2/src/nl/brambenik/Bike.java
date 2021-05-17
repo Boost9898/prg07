@@ -15,7 +15,7 @@ public class Bike implements Vehicle {
     }
 
     @Override
-    public void getSpeed() {
-        System.out.println("De fiets heeft een snelheid van " + speed + " KM/h");
+    public int getSpeed() {
+        return speed;
     }
 }

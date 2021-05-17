@@ -15,7 +15,7 @@ public class Car implements Vehicle {
     }
 
     @Override
-    public void getSpeed() {
-        System.out.println("Speed is " + speed + " KM/h");
+    public int getSpeed() {
+        return speed;
     }
 }

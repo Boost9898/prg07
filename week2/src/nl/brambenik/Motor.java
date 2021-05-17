@@ -15,7 +15,7 @@ public class Motor implements Vehicle{
     }
 
     @Override
-    public void getSpeed() {
-        System.out.println("De motor gaat " + speed + " KM/h");
+    public int getSpeed() {
+        return speed;
     }
 }

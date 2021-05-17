@@ -1,6 +1,6 @@
 package nl.brambenik;
 
-public class Bike implements Vehicle {
+public class Bike extends Vehicle {
 
     int speed = 20;
 

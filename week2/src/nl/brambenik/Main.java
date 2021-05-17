@@ -1,6 +1,7 @@
 package nl.brambenik;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 
 public class Main {
@@ -53,7 +54,10 @@ public class Main {
 
         for (Vehicle vehicle : vehicleList) {
             System.out.println(vehicle.getSpeed());
+            vehicle.drive();
         }
+
+//        Collection.sort(vehicleList);
 
     }
 

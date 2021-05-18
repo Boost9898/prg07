@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">week3opdr4</string>
+    <string name="start">Start</string>
+    <string name="about">About</string>
+    <string name="exit">exit</string>
+    <string name="gameButton_1">1</string>
+    <string name="gameButton_2">2</string>
+    <string name="gameButton_3">3</string>
+</resources>

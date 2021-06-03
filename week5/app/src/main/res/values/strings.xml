@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">soundboard</string>
+    <string name="btn_bottom">Soundboard</string>
+    <string name="btn_1">Bulbasaur</string>
+    <string name="btn_2">Charmender</string>
+    <string name="contentDesc_img1">This is Bulbasaur</string>
+    <string name="contentDesc_img2">This is Charmender</string>
+</resources>

@@ -3,8 +3,11 @@ package com.example.profitchecker;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,7 +25,7 @@ import org.json.JSONObject;
 
 import java.util.Iterator;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     // const with log tag for debugging, const uri which is filled with an API
     private final static String LOG_TAG = "ProfitChecker";
@@ -38,9 +41,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Button button = findViewById(R.id.btn_settings);
+        button.setOnClickListener(this);
+
         getProfitability();
     }
 
+    @Override
+    public void onClick(View view) {
+        // opens settings activity
+        Log.d(LOG_TAG, "Click");
+        Intent i = new Intent(MainActivity.this, SettingsActivity.class);
+        startActivity(i);
+    }
+
+    @Override
+    protected void onResume() {
+        // calls getProfitability again when coming back to this screen to update to the latest information
+        super.onResume();
+        getProfitability();
+    }
 
     private void getProfitability() {
         // instantiate the RequestQueue
@@ -89,14 +109,24 @@ public class MainActivity extends AppCompatActivity {
         Log.d(LOG_TAG, String.valueOf(expectedReward24H));
         Log.d(LOG_TAG, String.valueOf(expectedProfitabilityUSD));
 
-        // update to textview and add dollar sign in front of it
-        TextView tv = findViewById(R.id.txt_exchangeRatesUsd);
-        tv.setText("$ " + String.valueOf(exchangeRatesUsd));
+        // update current eth price to textview and add dollar sign in front of it
+        TextView tv_exchangeRatesUsd = findViewById(R.id.txt_exchangeRatesUsd);
+        tv_exchangeRatesUsd.setText("$ " + String.valueOf(exchangeRatesUsd));
+
+        // update current usd profit per 100 mhs to textview and add dollar sign in front of it
+        // added math.round 100 to round it to 2 decimals
+        TextView tv_expectedProfitabilityUSD = findViewById(R.id.txt_profitValue100usd);
+        tv_expectedProfitabilityUSD.setText("$ " + String.valueOf(Math.round(expectedProfitabilityUSD * 100)/100.0));
+
+        // update current eth profit per 10000 mhs to textview and add ether sign in front of it
+        // added math.round 100000 to round it to 5 decimals
+        TextView tv_expectedReward24H = findViewById(R.id.txt_profitValue100ether);
+        tv_expectedReward24H.setText("Ξ " + String.valueOf(Math.round(expectedReward24H * 100000)/100000.0));
 
     }
 
-    // maybe nice to use later, a small easter egg
     private void easterEgg() {
+        // maybe nice to use later, a small easter egg
         // creating a context which is requiered for the toast message below
         Context context = getApplicationContext();
         CharSequence text = "Je hebt een easter egg gevonden!";

@@ -4,4 +4,6 @@
     <string name="current_price_of_ethereum">Current price of Ethereum</string>
     <string name="ethereum_logo">Ethereum logo</string>
     <string name="btn_settings">Settings</string>
+    <string name="btn_finish">Finish</string>
+    <string name="profitability_per_100_mhs">Profitability per 100 MH/s</string>
 </resources>

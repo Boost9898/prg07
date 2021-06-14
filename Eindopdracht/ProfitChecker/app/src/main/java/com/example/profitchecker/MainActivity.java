@@ -16,14 +16,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
-import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.Volley;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.Iterator;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -57,7 +53,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     protected void onResume() {
+        // reads current status of languageSwitch (settings.xml) and logs it
         // calls getProfitability again when coming back to this screen to update to the latest information
+        Log.d(LOG_TAG, "Language switch: " + SettingsActivity.languageSwitch(this));
         super.onResume();
         getProfitability();
     }

@@ -32,6 +32,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public double expectedReward24H = 0;
     public double expectedProfitabilityUSD = 0;
 
+    // private boolean, used to prevent a refresh loop
+    private boolean isRefreshed = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
+        // set booleon to true to prevent a loop later
+        isRefreshed = true;
+
         // opens settings activity
         Log.d(LOG_TAG, "Click");
         Intent i = new Intent(MainActivity.this, SettingsActivity.class);

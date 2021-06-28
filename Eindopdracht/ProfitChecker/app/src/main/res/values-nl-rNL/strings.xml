@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Profit Checker</string>
+    <string name="txt_exchangeRatesUsd">tijdelijke aanduiding</string>
+    <string name="current_price_of_ethereum">Huidige prijs van Ethereum</string>
+    <string name="ethereum_logo">Ethereum logo</string>
+    <string name="btn_settings">Instellingen</string>
+    <string name="btn_finish">Afronden</string>
+    <string name="profitability_per_100_mhs">Winstgevendheid per 100 MH/s</string>
+    <string name="lang_switch">Verander taal naar Nederlands</string>
+</resources>

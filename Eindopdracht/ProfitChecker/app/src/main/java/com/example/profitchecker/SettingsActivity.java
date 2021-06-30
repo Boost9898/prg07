@@ -38,7 +38,7 @@ public class SettingsActivity extends PreferenceActivity {
     protected void onStop() {
         super.onStop();
 
-        //oof
+        // if the switch is switched, change language in AppLocale
         if(languageSwitch(this)) {
             setAppLocale("NL");
         } else {

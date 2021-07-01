@@ -8,6 +8,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,11 +25,16 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnSuccessListener;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -48,8 +55,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public double expectedReward24H = 0;
     public double expectedProfitabilityUSD = 0;
 
-    // private boolean, used to prevent a refresh loop
-    private boolean isRefreshed = false;
+    // location request to request the current location of smartphone
+    LocationRequest locationRequest;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button = findViewById(R.id.btn_settings);
         button.setOnClickListener(this);
 
-        getProfitability();
+//        getProfitability();
 
         // get latest known location
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
@@ -69,9 +77,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View view) {
-        // set boolean to true to prevent a loop later
-        isRefreshed = true;
-
         // opens settings activity
         Log.d(LOG_TAG, "Click");
         Intent i = new Intent(MainActivity.this, SettingsActivity.class);
@@ -156,12 +161,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private void showCurrentLocation() {
         Log.d(LOG_TAG, "showCurrentLocation() is aangeroepen");
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, REQ_CODE_LAST_KNOWN_LOCATION);
-            // here to request the missing permissions, and then overriding
-
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
+            Log.d(LOG_TAG, "ShowCurrentLocation() if statement");
             return;
         }
 
@@ -169,15 +170,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 .addOnSuccessListener(this, new OnSuccessListener<Location>() {
                     @Override
                     public void onSuccess(Location location) {
-                        Log.d(LOG_TAG, "showCurrentLocation() is mislukt");
                         if (location != null) {
                             Log.d(LOG_TAG, "Locatie is opgegaald");
+                            Log.d(LOG_TAG, "Last Location Latitude: " + location.getLatitude());
+                            Log.d(LOG_TAG, "Last Location Longitude: " + location.getLongitude());
+
+                            double latitude = location.getLatitude();
+                            double longitude = location.getLongitude();
+
+                            Context context = getApplicationContext();
+                            Geocoder gcd = new Geocoder(context, Locale.getDefault());
+                            List<Address> addresses = null;
+                            try {
+                                addresses = gcd.getFromLocation(latitude, longitude, 1);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+
+                            if (addresses.size() > 0)
+                            {
+                                String countryName=addresses.get(0).getCountryName();
+                                Log.d(LOG_TAG, "" + countryName);
+                            }
+
                         } else {
                             Log.d(LOG_TAG, "No last know location available :(");
                         }
                     }
                 });
     }
+
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
@@ -189,7 +211,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     showCurrentLocation();
                 } else {
                     Log.d(LOG_TAG, "User denied permissions");
-                    showCurrentLocation();
+                    easterEgg();
                 }
                 return;
         }
@@ -198,15 +220,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
-//    private void easterEgg() {
-//        // maybe nice to use later, a small easter egg
-//        // creating a context which is requiered for the toast message below
-//        Context context = getApplicationContext();
-//        CharSequence text = "Je hebt een easter egg gevonden!";
-//        int duration = Toast.LENGTH_SHORT;
-//
-//        Toast toast = Toast.makeText(context, text, duration);
-//        toast.show();
-//    }
+
+    private void easterEgg() {
+        // maybe nice to use later, a small easter egg
+        // creating a context which is requiered for the toast message below
+        Context context = getApplicationContext();
+        CharSequence text = "Je hebt een easter egg gevonden!";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
+    }
 
 }
